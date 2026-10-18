@@ -1,0 +1,34 @@
+# Local implementation contract; intentionally never committed.
+/MVP_IMPLEMENTATION_PLAN.md
+
+# Credentials and account sessions, including sidecars.
+.env
+.env.*
+!.env.example
+*.session
+*.session-*
+*.session.*
+
+# Local source content, databases, reports, review exports, and logs.
+var/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.log
+*.log.*
+
+# Python and local tooling.
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+.DS_Store
