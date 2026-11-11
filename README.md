@@ -4,10 +4,11 @@ Local analytics for observed job advertising in one Telegram channel, covering I
 and digital-business roles. The MVP is being implemented incrementally.
 
 Currently implemented: an installable Python package, CLI help/version, local
-settings validation, project-root resolution, privacy-preserving logging, and
-[extraction contracts, versioned taxonomy, and development fixtures](docs/data_dictionary.md).
-Database migrations, parsing, processing, Telegram login/collection, review,
-reports, scheduling, and evaluation are not implemented yet. Accuracy is unmeasured.
+settings, privacy-preserving logging, and the initial database migration. The
+[data dictionary](docs/data_dictionary.md) describes the schema, extraction
+contracts, versioned taxonomy, and development fixtures. Parsing, processing,
+Telegram login/collection, review, reports, scheduling, and evaluation are not
+implemented yet. Accuracy is unmeasured.
 
 ## Installation and checks
 
@@ -80,6 +81,24 @@ SQLite file URLs and `sqlite:///:memory:` are supported configuration forms.
 SQLite URI query parameters and async drivers are rejected. PostgreSQL URLs can
 be validated without connecting; PostgreSQL drivers and integration validation
 are deferred. This does not claim PostgreSQL compatibility.
+
+## Initialize or upgrade the database
+
+```sh
+uv run --locked --offline python -m job_market db upgrade
+```
+
+The command applies Alembic revisions and creates the parent directory for a
+file-backed SQLite database if needed. With default settings it writes to
+`var/jobs.db`. It needs no Telegram credentials. Rerunning it at the current
+schema version preserves data. The migration files ship in the installed wheel,
+so `--project-root /absolute/project/path db upgrade` also works from elsewhere.
+An in-memory SQLite URL is unsuitable for this command because the database
+would disappear when the process exits.
+
+Close application processes before upgrading an existing database. Make a
+consistent backup using SQLite's backup mechanism; in WAL mode, copying only
+the main `.db` file can omit committed changes. Use the SQLite path for this MVP.
 
 ## Local data and logs
 

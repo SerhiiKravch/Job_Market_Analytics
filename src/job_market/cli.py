@@ -9,6 +9,7 @@ from pathlib import Path
 from job_market import __version__
 from job_market.config import ConfigurationError, load_settings
 from job_market.logging_config import configure_logging
+from job_market.storage.migration import MigrationError, upgrade_database
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -36,6 +37,9 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="also validate configured credentials and channel reference locally; never connect",
     )
+    db = commands.add_parser("db", help="manage the local database schema")
+    db_commands = db.add_subparsers(dest="db_command", required=True)
+    db_commands.add_parser("upgrade", help="apply pending Alembic migrations")
     return parser
 
 
@@ -51,6 +55,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         settings = load_settings(args.project_root)
         configure_logging(settings.log_level)
+        if args.command == "db":
+            upgrade_database(settings.database_url.get_secret_value())
+            print("Database schema is up to date.")
+            return 0
         if args.telegram:
             settings.telegram_credentials()
             settings.require_channel()
@@ -61,3 +69,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     except ConfigurationError as exc:
         print(f"Configuration error: {exc}", file=sys.stderr)
         return 2
+    except MigrationError as exc:
+        print(f"Database migration error: {exc}", file=sys.stderr)
+        return 1

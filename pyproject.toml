@@ -23,8 +23,15 @@ job-market = "job_market.cli:main"
 [dependency-groups]
 dev = ["pytest>=8,<10", "ruff>=0.9,<1"]
 
+[tool.hatch.build]
+dev-mode-dirs = ["src"]
+
 [tool.hatch.build.targets.wheel]
-packages = ["src/job_market"]
+only-include = ["src/job_market", "migrations"]
+
+[tool.hatch.build.targets.wheel.sources]
+src = ""
+migrations = "job_market/storage/migrations"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -73,3 +73,47 @@ examples. JSON annotations in `tests/fixtures/expected/` use the extraction
 contract and the marker `reference-1` to distinguish them from parser output.
 They cover selected evidenced interpretations and negative expectations for
 development, with no claim of held-out coverage or measured accuracy.
+
+## Database schema and ownership
+
+The Alembic revision creates eleven application tables and the separate
+`alembic_version` bookkeeping table. All application tables have an `id`
+primary key (`INTEGER` on SQLite; `BIGINT` on PostgreSQL). Telegram identifiers
+are signed 64-bit integers independent of internal IDs. Foreign keys have no
+cascading deletes, so deleting a source with history fails.
+
+| Table | Ownership and identity |
+|---|---|
+| `sources` | Unique stable Telegram chat ID; history and live checkpoints are separate. |
+| `messages` | Owned by a source; unique Telegram message ID within that source. |
+| `message_revisions` | Owned by a message; unique revision number within it. The indexed content hash can repeat. |
+| `extraction_runs` | Owned by a revision; globally unique request key. A manual run has a parent from the same revision. |
+| `job_postings` | Owned by a run; unique posting number within it. |
+| `experience_requirements` | Owned by a posting; may also refer to a vocabulary keyword. |
+| `salary_offers` | Owned by a posting; stores exact scaled integers and explicit units. |
+| `keywords` | Unique canonical code for a vocabulary entry. |
+| `keyword_mentions` | Owned by a posting and linked to a keyword; occurrences can repeat. |
+| `review_issues` | Owned by a run; an optional posting must belong to it, and a resolution run must use the same revision. |
+| `duplicate_links` | Ordered pair of revisions from different messages, with a unique pair and retained review decision. |
+
+The `messages.current_revision_id` foreign key includes the message's own ID.
+The `message_revisions.active_extraction_run_id` foreign key includes the revision's
+ID and an internal `active_run_status` column constrained to `completed`. This
+prevents selecting an unfinished run, even through direct SQL. SQLite declares
+these two circular foreign keys during table creation; PostgreSQL adds them
+after the referenced tables exist. `review_issues.message_revision_id` and the
+two message IDs in `duplicate_links` are internal keys used to enforce ownership
+with composite foreign keys.
+
+The ORM accepts timezone-aware datetimes and normalizes them to UTC. SQLite
+stores UTC with no timezone suffix and restores it as aware UTC on read.
+PostgreSQL DDL uses `TIMESTAMP WITH TIME ZONE`; execution against a PostgreSQL
+server has not been verified. Evidence and field states use JSON. Reporting
+dimensions remain separate columns, with indexes for publication dates, run
+status, content hashes, role family, keyword context, and review status.
+
+SQLite connections enforce foreign keys, use a five-second busy timeout, and
+enable WAL for file databases. The storage transaction boundary serializes
+short-lived sessions within one process. Result immutability, vocabulary
+seeding, evidence-to-source checks before persistence, and active-result
+selection policy belong to later application steps.
