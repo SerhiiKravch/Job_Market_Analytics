@@ -1,0 +1,352 @@
+{
+  "parser_version": "reference-1",
+  "taxonomy_version": "1.0.0",
+  "classification": "single_vacancy",
+  "classification_evidence": [
+    {
+      "text": "Шукаємо досвідченого UA Manager",
+      "start_offset": 39,
+      "end_offset": 70
+    }
+  ],
+  "posting": {
+    "title_original": "UA Manager",
+    "role_normalized": "User Acquisition Manager",
+    "role_family_code": "marketing_growth",
+    "employment_schedule": "full_time",
+    "work_arrangement": "remote",
+    "compensation_text": "фікс + бонуси",
+    "fixed_pay_stated": true,
+    "bonus_stated": true,
+    "field_evidence": {
+      "title_original": [
+        {
+          "text": "UA Manager | Mobile Subscription Apps",
+          "start_offset": 0,
+          "end_offset": 37,
+          "taxonomy_code": "user_acquisition_manager"
+        }
+      ],
+      "role_normalized": [
+        {
+          "text": "UA Manager | Mobile Subscription Apps",
+          "start_offset": 0,
+          "end_offset": 37,
+          "taxonomy_code": "user_acquisition_manager"
+        }
+      ],
+      "role_family_code": [
+        {
+          "text": "UA Manager | Mobile Subscription Apps",
+          "start_offset": 0,
+          "end_offset": 37,
+          "taxonomy_code": "user_acquisition_manager"
+        }
+      ],
+      "work_arrangement": [
+        {
+          "text": "fully remote",
+          "start_offset": 1268,
+          "end_offset": 1280
+        }
+      ],
+      "employment_schedule": [
+        {
+          "text": "full-time",
+          "start_offset": 1256,
+          "end_offset": 1265
+        }
+      ],
+      "compensation_text": [
+        {
+          "text": "фікс + бонуси",
+          "start_offset": 1283,
+          "end_offset": 1296
+        }
+      ],
+      "fixed_pay_stated": [
+        {
+          "text": "фікс",
+          "start_offset": 1283,
+          "end_offset": 1287
+        }
+      ],
+      "bonus_stated": [
+        {
+          "text": "бонуси",
+          "start_offset": 1290,
+          "end_offset": 1296
+        }
+      ]
+    },
+    "experience_requirements": [
+      {
+        "scope_type": "role_specific",
+        "scope_text": "UA / Performance Marketing з mobile subscription products",
+        "minimum_months": 24,
+        "requirement_context": "required",
+        "prior_experience_policy": "required",
+        "original_text": "2+ роки досвіду в UA / Performance Marketing з mobile subscription products"
+      }
+    ],
+    "keyword_mentions": [
+      {
+        "keyword_code": "meta_ads",
+        "original_term": "Meta Ads",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "Meta Ads",
+        "start_offset": 236,
+        "end_offset": 244
+      },
+      {
+        "keyword_code": "tiktok_ads",
+        "original_term": "TikTok Ads",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "TikTok Ads",
+        "start_offset": 246,
+        "end_offset": 256
+      },
+      {
+        "keyword_code": "paywall",
+        "original_term": "paywall",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "paywall",
+        "start_offset": 362,
+        "end_offset": 369
+      },
+      {
+        "keyword_code": "onboarding",
+        "original_term": "onboarding",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "onboarding",
+        "start_offset": 371,
+        "end_offset": 381
+      },
+      {
+        "keyword_code": "subscription_funnel",
+        "original_term": "subscription funnel",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "subscription funnel",
+        "start_offset": 393,
+        "end_offset": 412
+      },
+      {
+        "keyword_code": "ctr",
+        "original_term": "CTR",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "CTR",
+        "start_offset": 456,
+        "end_offset": 459
+      },
+      {
+        "keyword_code": "cpi",
+        "original_term": "CPI",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "CPI",
+        "start_offset": 461,
+        "end_offset": 464
+      },
+      {
+        "keyword_code": "cac",
+        "original_term": "CAC",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "CAC",
+        "start_offset": 466,
+        "end_offset": 469
+      },
+      {
+        "keyword_code": "roas",
+        "original_term": "ROAS",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "ROAS",
+        "start_offset": 471,
+        "end_offset": 475
+      },
+      {
+        "keyword_code": "ltv",
+        "original_term": "LTV",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "LTV",
+        "start_offset": 477,
+        "end_offset": 480
+      },
+      {
+        "keyword_code": "trial_to_paid",
+        "original_term": "Trial-to-Paid",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "Trial-to-Paid",
+        "start_offset": 482,
+        "end_offset": 495
+      },
+      {
+        "keyword_code": "renewal_rate",
+        "original_term": "Renewal Rate",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "Renewal Rate",
+        "start_offset": 497,
+        "end_offset": 509
+      },
+      {
+        "keyword_code": "payback",
+        "original_term": "Payback",
+        "context": "responsibility",
+        "section_label": "Що робити",
+        "evidence_text": "Payback",
+        "start_offset": 511,
+        "end_offset": 518
+      },
+      {
+        "keyword_code": "performance_marketing",
+        "original_term": "Performance Marketing",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "Performance Marketing",
+        "start_offset": 629,
+        "end_offset": 650
+      },
+      {
+        "keyword_code": "mobile_subscription",
+        "original_term": "mobile subscription products",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "mobile subscription products",
+        "start_offset": 653,
+        "end_offset": 681
+      },
+      {
+        "keyword_code": "meta_ads",
+        "original_term": "Meta Ads",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "Meta Ads",
+        "start_offset": 760,
+        "end_offset": 768
+      },
+      {
+        "keyword_code": "roas",
+        "original_term": "ROAS",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "ROAS",
+        "start_offset": 911,
+        "end_offset": 915
+      },
+      {
+        "keyword_code": "roi",
+        "original_term": "ROI",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "ROI",
+        "start_offset": 918,
+        "end_offset": 921
+      },
+      {
+        "keyword_code": "appsflyer",
+        "original_term": "AppsFlyer",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "розуміння AppsFlyer / Adapty, SKAdNetwork, ATT та mobile analytics",
+        "start_offset": 809,
+        "end_offset": 875,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "adapty",
+        "original_term": "Adapty",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "розуміння AppsFlyer / Adapty, SKAdNetwork, ATT та mobile analytics",
+        "start_offset": 809,
+        "end_offset": 875,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "skadnetwork",
+        "original_term": "SKAdNetwork",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "розуміння AppsFlyer / Adapty, SKAdNetwork, ATT та mobile analytics",
+        "start_offset": 809,
+        "end_offset": 875,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "app_tracking_transparency",
+        "original_term": "ATT",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "розуміння AppsFlyer / Adapty, SKAdNetwork, ATT та mobile analytics",
+        "start_offset": 809,
+        "end_offset": 875,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "mobile_analytics",
+        "original_term": "mobile analytics",
+        "context": "required",
+        "section_label": "Що важливо",
+        "evidence_text": "розуміння AppsFlyer / Adapty, SKAdNetwork, ATT та mobile analytics",
+        "start_offset": 809,
+        "end_offset": 875,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "tiktok_ads",
+        "original_term": "TikTok Ads",
+        "context": "preferred",
+        "section_label": "Буде плюсом",
+        "evidence_text": "TikTok Ads",
+        "start_offset": 936,
+        "end_offset": 946
+      },
+      {
+        "keyword_code": "tier_one_markets",
+        "original_term": "Tier-1 GEO",
+        "context": "preferred",
+        "section_label": "Буде плюсом",
+        "evidence_text": "Tier-1 GEO",
+        "start_offset": 948,
+        "end_offset": 958
+      },
+      {
+        "keyword_code": "paywall",
+        "original_term": "paywall",
+        "context": "preferred",
+        "section_label": "Буде плюсом",
+        "evidence_text": "paywall",
+        "start_offset": 960,
+        "end_offset": 967
+      },
+      {
+        "keyword_code": "onboarding",
+        "original_term": "onboarding",
+        "context": "preferred",
+        "section_label": "Буде плюсом",
+        "evidence_text": "onboarding",
+        "start_offset": 968,
+        "end_offset": 978
+      },
+      {
+        "keyword_code": "creative_strategy",
+        "original_term": "creative strategy",
+        "context": "preferred",
+        "section_label": "Буде плюсом",
+        "evidence_text": "creative strategy",
+        "start_offset": 994,
+        "end_offset": 1011
+      }
+    ]
+  }
+}

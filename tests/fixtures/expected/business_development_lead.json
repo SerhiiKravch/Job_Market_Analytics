@@ -1,0 +1,229 @@
+{
+  "parser_version": "reference-1",
+  "taxonomy_version": "1.0.0",
+  "classification": "single_vacancy",
+  "classification_evidence": [
+    {
+      "text": "We are looking for a Business Development Lead",
+      "start_offset": 28,
+      "end_offset": 74
+    }
+  ],
+  "posting": {
+    "title_original": "Business Development Lead",
+    "role_normalized": "Business Development Lead",
+    "role_family_code": "sales_business_development",
+    "seniority_original": "Lead",
+    "seniority_code": "lead",
+    "organizational_arrangement": "in_house",
+    "field_evidence": {
+      "title_original": [
+        {
+          "text": "Business Development Lead",
+          "start_offset": 49,
+          "end_offset": 74,
+          "taxonomy_code": "business_development_lead"
+        }
+      ],
+      "role_normalized": [
+        {
+          "text": "Business Development Lead",
+          "start_offset": 49,
+          "end_offset": 74,
+          "taxonomy_code": "business_development_lead"
+        }
+      ],
+      "role_family_code": [
+        {
+          "text": "Business Development Lead",
+          "start_offset": 49,
+          "end_offset": 74,
+          "taxonomy_code": "business_development_lead"
+        }
+      ],
+      "seniority_original": [
+        {
+          "text": "Business Development Lead",
+          "start_offset": 49,
+          "end_offset": 74,
+          "taxonomy_code": "business_development_lead"
+        }
+      ],
+      "seniority_code": [
+        {
+          "text": "Business Development Lead",
+          "start_offset": 49,
+          "end_offset": 74,
+          "taxonomy_code": "business_development_lead"
+        }
+      ],
+      "organizational_arrangement": [
+        {
+          "text": "In-house (not outstaff)",
+          "start_offset": 0,
+          "end_offset": 23
+        }
+      ]
+    },
+    "experience_requirements": [
+      {
+        "scope_type": "role_specific",
+        "scope_text": "selling software outsourcing, nearshore teams, or custom software development services",
+        "minimum_months": 36,
+        "maximum_months": 72,
+        "requirement_context": "required",
+        "prior_experience_policy": "required",
+        "original_text": "3–6 years of experience selling software outsourcing, nearshore teams, or custom software development services"
+      }
+    ],
+    "keyword_mentions": [
+      {
+        "keyword_code": "software_outsourcing",
+        "original_term": "software outsourcing",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "software outsourcing",
+        "start_offset": 148,
+        "end_offset": 168
+      },
+      {
+        "keyword_code": "nearshore_teams",
+        "original_term": "nearshore teams",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "nearshore teams",
+        "start_offset": 170,
+        "end_offset": 185
+      },
+      {
+        "keyword_code": "custom_software_development",
+        "original_term": "custom software development",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "custom software development",
+        "start_offset": 190,
+        "end_offset": 217
+      },
+      {
+        "keyword_code": "full_cycle_sales",
+        "original_term": "full-cycle sales",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "full-cycle sales",
+        "start_offset": 368,
+        "end_offset": 384
+      },
+      {
+        "keyword_code": "consultative_selling",
+        "original_term": "consultative selling",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "consultative selling",
+        "start_offset": 456,
+        "end_offset": 476
+      },
+      {
+        "keyword_code": "commercial_negotiation",
+        "original_term": "commercial negotiation",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "commercial negotiation",
+        "start_offset": 481,
+        "end_offset": 503
+      },
+      {
+        "keyword_code": "time_and_materials",
+        "original_term": "T&M",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "T&M",
+        "start_offset": 571,
+        "end_offset": 574
+      },
+      {
+        "keyword_code": "dedicated_teams",
+        "original_term": "dedicated teams",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "dedicated teams",
+        "start_offset": 576,
+        "end_offset": 591
+      },
+      {
+        "keyword_code": "fixed_scope",
+        "original_term": "fixed-scope",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "fixed-scope",
+        "start_offset": 593,
+        "end_offset": 604
+      },
+      {
+        "keyword_code": "crm",
+        "original_term": "CRM",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "CRM",
+        "start_offset": 687,
+        "end_offset": 690
+      },
+      {
+        "keyword_code": "sales_forecasting",
+        "original_term": "sales forecasting",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "sales forecasting",
+        "start_offset": 692,
+        "end_offset": 709
+      },
+      {
+        "keyword_code": "pipeline_management",
+        "original_term": "pipeline management",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "pipeline management",
+        "start_offset": 715,
+        "end_offset": 734
+      },
+      {
+        "keyword_code": "go_to_market",
+        "original_term": "GTM strategy",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "GTM strategy",
+        "start_offset": 625,
+        "end_offset": 637,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "ideal_customer_profile",
+        "original_term": "ICP",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "ICP",
+        "start_offset": 639,
+        "end_offset": 642,
+        "qualification_level": "understanding"
+      },
+      {
+        "keyword_code": "english",
+        "original_term": "English",
+        "context": "required",
+        "section_label": "Requirements",
+        "evidence_text": "Fluent English",
+        "start_offset": 823,
+        "end_offset": 837,
+        "qualification_level": "proficiency"
+      },
+      {
+        "keyword_code": "european_languages",
+        "original_term": "additional European languages",
+        "context": "preferred",
+        "section_label": "Requirements",
+        "evidence_text": "additional European languages are a plus",
+        "start_offset": 839,
+        "end_offset": 879
+      }
+    ]
+  }
+}

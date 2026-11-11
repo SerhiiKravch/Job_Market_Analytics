@@ -1,0 +1,158 @@
+{
+  "parser_version": "reference-1",
+  "taxonomy_version": "1.0.0",
+  "classification": "single_vacancy",
+  "classification_evidence": [
+    {
+      "text": "Шукаємо досвідченого IT Recruiter",
+      "start_offset": 78,
+      "end_offset": 111
+    }
+  ],
+  "posting": {
+    "title_original": "IT Recruiter",
+    "role_normalized": "IT Recruiter",
+    "role_family_code": "recruitment_hr",
+    "work_arrangement": "remote",
+    "compensation_text": "Зарплата чистими до $2,500",
+    "field_evidence": {
+      "title_original": [
+        {
+          "text": "IT Recruiter",
+          "start_offset": 99,
+          "end_offset": 111,
+          "taxonomy_code": "it_recruiter"
+        }
+      ],
+      "role_normalized": [
+        {
+          "text": "IT Recruiter",
+          "start_offset": 99,
+          "end_offset": 111,
+          "taxonomy_code": "it_recruiter"
+        }
+      ],
+      "role_family_code": [
+        {
+          "text": "IT Recruiter",
+          "start_offset": 99,
+          "end_offset": 111,
+          "taxonomy_code": "it_recruiter"
+        }
+      ],
+      "work_arrangement": [
+        {
+          "text": "повністю віддалений",
+          "start_offset": 719,
+          "end_offset": 738
+        }
+      ],
+      "compensation_text": [
+        {
+          "text": "Зарплата чистими до $2,500",
+          "start_offset": 50,
+          "end_offset": 76
+        }
+      ]
+    },
+    "experience_requirements": [
+      {
+        "scope_type": "role_specific",
+        "scope_text": "IT-рекрутингу з міжнародними ринками",
+        "requirement_context": "required",
+        "prior_experience_policy": "required",
+        "original_text": "Досвід роботи в IT-рекрутингу з міжнародними ринками.",
+        "field_states": {
+          "minimum_months": "not_stated",
+          "maximum_months": "not_stated"
+        }
+      }
+    ],
+    "salary_offers": [
+      {
+        "maximum_amount_scaled": 25000000,
+        "bound_type": "upper_only",
+        "tax_basis": "net",
+        "currency_symbol": "$",
+        "evidence": [
+          {
+            "text": "Зарплата чистими до $2,500",
+            "start_offset": 50,
+            "end_offset": 76
+          },
+          {
+            "text": "Бюджет: до $2,500 — залежно від досвіду та експертизи.",
+            "start_offset": 742,
+            "end_offset": 796
+          }
+        ],
+        "field_states": {
+          "currency_code": "ambiguous",
+          "payment_period": "not_stated"
+        }
+      }
+    ],
+    "keyword_mentions": [
+      {
+        "keyword_code": "linkedin",
+        "original_term": "LinkedIn",
+        "context": "required",
+        "section_label": "Основні вимоги",
+        "evidence_text": "LinkedIn",
+        "start_offset": 370,
+        "end_offset": 378,
+        "qualification_level": "proficiency"
+      },
+      {
+        "keyword_code": "boolean_search",
+        "original_term": "Boolean Search",
+        "context": "required",
+        "section_label": "Основні вимоги",
+        "evidence_text": "Boolean Search",
+        "start_offset": 380,
+        "end_offset": 394,
+        "qualification_level": "proficiency"
+      },
+      {
+        "keyword_code": "sourcing_tools",
+        "original_term": "sourcing-інструменти",
+        "context": "required",
+        "section_label": "Основні вимоги",
+        "evidence_text": "sourcing-інструменти",
+        "start_offset": 403,
+        "end_offset": 423,
+        "qualification_level": "proficiency"
+      },
+      {
+        "keyword_code": "fintech",
+        "original_term": "FinTech",
+        "context": "preferred",
+        "section_label": "Буде значною перевагою",
+        "evidence_text": "FinTech",
+        "start_offset": 573,
+        "end_offset": 580,
+        "qualification_level": "practical_experience"
+      },
+      {
+        "keyword_code": "gambling",
+        "original_term": "Gambling",
+        "context": "preferred",
+        "section_label": "Буде значною перевагою",
+        "evidence_text": "Gambling",
+        "start_offset": 582,
+        "end_offset": 590,
+        "qualification_level": "practical_experience"
+      },
+      {
+        "keyword_code": "igaming",
+        "original_term": "iGaming",
+        "context": "preferred",
+        "section_label": "Буде значною перевагою",
+        "evidence_text": "iGaming",
+        "start_offset": 595,
+        "end_offset": 602,
+        "qualification_level": "practical_experience"
+      }
+    ]
+  }
+}

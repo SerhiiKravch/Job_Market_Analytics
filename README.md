@@ -4,7 +4,8 @@ Local analytics for observed job advertising in one Telegram channel, covering I
 and digital-business roles. The MVP is being implemented incrementally.
 
 Currently implemented: an installable Python package, CLI help/version, local
-settings validation, project-root resolution, and privacy-preserving logging.
+settings validation, project-root resolution, privacy-preserving logging, and
+[extraction contracts, versioned taxonomy, and development fixtures](docs/data_dictionary.md).
 Database migrations, parsing, processing, Telegram login/collection, review,
 reports, scheduling, and evaluation are not implemented yet. Accuracy is unmeasured.
 

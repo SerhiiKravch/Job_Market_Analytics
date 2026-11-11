@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "sections": [
+    {"kind": "required", "headings": ["Requirements", "Must have", "Основні вимоги", "Вимоги", "Що важливо", "Требования", "Основные требования", "Что важно"]},
+    {"kind": "preferred", "headings": ["Nice to have", "Preferred qualifications", "Буде плюсом", "Буде значною перевагою", "Буде перевагою", "Будет плюсом", "Будет преимуществом", "Желательно"]},
+    {"kind": "responsibilities", "headings": ["Responsibilities", "What you will do", "Що робити", "Обов’язки", "Задачі", "Обязанности", "Что делать", "Задачи"]},
+    {"kind": "offer", "headings": ["What we offer", "Benefits", "Умови", "Що даємо", "Ми пропонуємо", "Условия", "Что предлагаем", "Мы предлагаем"]},
+    {"kind": "contacts", "headings": ["How to apply", "Contacts", "Для відгуку", "Контакти", "Как откликнуться", "Контакты"]}
+  ],
+  "preference_cues": ["is a plus", "are a plus", "nice to have", "буде плюсом", "буде перевагою", "будет плюсом", "будет преимуществом", "желательно"],
+  "qualification_cues": [{"level": "understanding", "terms": ["understanding", "familiarity", "розуміння", "понимание", "знайомство", "знакомство"]}, {"level": "practical_experience", "terms": ["hands-on experience", "practical experience", "практичний досвід", "практический опыт", "досвід роботи", "опыт работы"]}, {"level": "proficiency", "terms": ["proficiency", "proficient", "володіння", "владение"]}]
+}
