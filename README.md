@@ -6,10 +6,11 @@ and digital-business roles. The MVP is being implemented incrementally.
 Currently implemented: an installable Python package, CLI help/version, local
 settings, privacy-preserving logging, the initial database migration, and
 storage for message revisions, collection checkpoints, and durable extraction
-requests. The [data dictionary](docs/data_dictionary.md) describes these
-behaviors, extraction contracts, taxonomy, and development fixtures. Telegram
-collection, parsing, extraction processing, review, reports, scheduling, and
-evaluation are not implemented yet. Accuracy is unmeasured.
+requests. The deterministic vacancy parser works on original text and captions
+without network access. The [data dictionary](docs/data_dictionary.md) describes
+its output, evidence, taxonomy, and development fixtures. Running the parser on
+queued work, Telegram collection, review, reports, scheduling, and evaluation
+are later steps. Accuracy is unmeasured.
 
 ## Installation and checks
 

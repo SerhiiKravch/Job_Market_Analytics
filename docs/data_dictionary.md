@@ -154,4 +154,43 @@ Claiming a request records the attempt before processing begins. Startup
 recovery requeues interrupted claims with their existing attempt count, or
 marks them failed once the limit is reached. Recovery is explicit and must run
 only after the caller has exclusive workspace ownership and no worker can
-still be running. The OS process lock and parser execution are later steps.
+still be running. The OS process lock and execution of queued requests are
+later steps.
+
+## Deterministic extraction
+
+`job_market.parsing.pipeline.parse_vacancy(original, content_kind=...)` is a pure
+function over one source post. Parser version `1.0.0` uses the packaged role,
+keyword, and section vocabulary. It checks English, Ukrainian, and Russian cues
+together and maps normalized matches back to exact original Unicode text.
+Versioning the rules separately from the taxonomy preserves the identity of an
+interpretation. An empty or unsupported post cannot produce a vacancy.
+
+- Hiring statements and explicit titles take precedence over hashtags. A
+  supported title with additional vacancy evidence can establish a posting.
+  Isolated headings and conflicting titles can require review. Separately
+  advertised roles yield `multiple_vacancies`; alternatives for one position
+  can preserve the title without inventing one normalized role.
+- Section and local wording determine keyword context. Separate occurrences can
+  carry different contexts or qualification levels. Contact and offer text is
+  excluded from skill extraction. Slash-separated skills do not imply that all
+  or any one is required. Short aliases such as `Go` and `R` need local context.
+- Experience retains the wording and scope of each requirement. A duration is
+  recorded only when it can be converted exactly to whole months. A stated
+  minimum is not a maximum; an explicit no-experience policy has no numeric
+  duration. Malformed duration bounds can block the experience metric alone.
+- Salary rules recognize explicit bounds, common numeric forms, currencies,
+  periods, and tax cues. For example, `$2,500` has a numeric amount and an
+  ambiguous currency code; its period stays unspecified unless stated.
+  Matching offers merge their compatible evidence. Approximate, conflicting,
+  malformed, or inexact amounts can block salary metrics while leaving the
+  posting and compensation evidence available. No currency conversion occurs.
+- Work mode, schedule, organizational arrangement, and compensation components
+  are independent. In-house does not imply on-site, and a company team's setup
+  does not establish the hire's arrangement. Fixed pay plus bonuses can be
+  recorded even when there is no numeric offer.
+
+These rules cover supported wording and taxonomy entries; they do not provide
+general language understanding or exhaustively recognize every title inflection,
+layout, or compensation expression. The three sanitized reference posts and
+synthetic checks test specified behavior. They do not measure production accuracy.
