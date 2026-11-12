@@ -117,3 +117,41 @@ enable WAL for file databases. The storage transaction boundary serializes
 short-lived sessions within one process. Result immutability, vocabulary
 seeding, evidence-to-source checks before persistence, and active-result
 selection policy belong to later application steps.
+
+## Message history, checkpoints, and extraction requests
+
+Source registration uses the stable Telegram chat ID. Re-registering the same
+channel refreshes its display metadata without resetting its original backfill
+window or checkpoints. Registering a different enabled channel requires an
+explicit source change.
+
+A replay with the same exact text, content kind, and Telegram edit timestamp
+reuses the stored revision, even if that revision is no longer current. For a
+new version, a strictly newer Telegram edit timestamp can replace the current
+revision. The comparison uses the publication time as the baseline for the
+initial version with no edit stamp. An incoming observation with no edit stamp,
+an equal stamp, or an older stamp never replaces an existing selection. A
+different observation is still retained with its original text and timestamps.
+The observed time records when it arrived; it does not decide source order.
+A newer edit with unchanged text, or a newer edit back to earlier text, is a
+separate revision. The revision hash covers the exact UTF-8 text.
+
+Each revision, including a retained historical version, gets one initial
+automatic request in the same transaction. A replay or restart does not change
+the request key or its pinned parser and taxonomy versions. Historical jobs do
+not affect which revision is current. The parser and selection of completed
+extractions are separate from this storage step.
+
+History pages advance a descending cursor within the persisted backfill window.
+Live callbacks can save observations but do not advance the live checkpoint.
+Only a caller that has reconciled a bounded range supplies its covered upper
+ID; sparse message IDs are allowed, and older observations can accompany the
+range to reconcile edits. Each batch and checkpoint change commit together.
+The write requires the stored checkpoint to match the caller's starting
+checkpoint. A mismatch rolls back the batch; reread and retry from storage.
+
+Claiming a request records the attempt before processing begins. Startup
+recovery requeues interrupted claims with their existing attempt count, or
+marks them failed once the limit is reached. Recovery is explicit and must run
+only after the caller has exclusive workspace ownership and no worker can
+still be running. The OS process lock and parser execution are later steps.

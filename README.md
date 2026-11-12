@@ -4,11 +4,12 @@ Local analytics for observed job advertising in one Telegram channel, covering I
 and digital-business roles. The MVP is being implemented incrementally.
 
 Currently implemented: an installable Python package, CLI help/version, local
-settings, privacy-preserving logging, and the initial database migration. The
-[data dictionary](docs/data_dictionary.md) describes the schema, extraction
-contracts, versioned taxonomy, and development fixtures. Parsing, processing,
-Telegram login/collection, review, reports, scheduling, and evaluation are not
-implemented yet. Accuracy is unmeasured.
+settings, privacy-preserving logging, the initial database migration, and
+storage for message revisions, collection checkpoints, and durable extraction
+requests. The [data dictionary](docs/data_dictionary.md) describes these
+behaviors, extraction contracts, taxonomy, and development fixtures. Telegram
+collection, parsing, extraction processing, review, reports, scheduling, and
+evaluation are not implemented yet. Accuracy is unmeasured.
 
 ## Installation and checks
 
