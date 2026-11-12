@@ -8,9 +8,10 @@ settings, privacy-preserving logging, the initial database migration, and
 storage for message revisions, collection checkpoints, and durable extraction
 requests. The deterministic vacancy parser works on original text and captions
 without network access. The [data dictionary](docs/data_dictionary.md) describes
-its output, evidence, taxonomy, and development fixtures. Running the parser on
-queued work, Telegram collection, review, reports, scheduling, and evaluation
-are later steps. Accuracy is unmeasured.
+its output, evidence, taxonomy, and development fixtures. Local processing and
+explicit reprocessing are available for stored revisions. Telegram collection,
+review commands, reports, scheduling, and evaluation are later steps. Accuracy
+is unmeasured.
 
 ## Installation and checks
 
@@ -101,6 +102,29 @@ would disappear when the process exits.
 Close application processes before upgrading an existing database. Make a
 consistent backup using SQLite's backup mechanism; in WAL mode, copying only
 the main `.db` file can omit committed changes. Use the SQLite path for this MVP.
+
+## Process stored revisions offline
+
+After `db upgrade`, run these commands against the configured SQLite file:
+
+```sh
+uv run --locked --offline python -m job_market process-pending
+uv run --locked --offline python -m job_market reprocess 42 57
+uv run --locked --offline python -m job_market process-pending
+```
+
+Replace `42 57` with explicit stored revision IDs. `reprocess` queues new requests
+and prints their IDs without running them. `process-pending` processes ready work,
+reports safe counts and failure categories, and exits without waiting for delayed
+retries. It returns a nonzero status if a request fails during that invocation.
+Neither command connects to Telegram. A fresh database has nothing to process.
+
+Both commands use the same POSIX workspace lock and refuse to run if a worker
+owns it. The adjacent `.worker.lock` file can remain after a worker exits; the OS
+releases ownership on exit. Do not delete it while workers may be running.
+An interrupted claim is recovered on the next run. A request pinned to an
+unavailable parser or taxonomy version fails with `version_unavailable`; use
+`reprocess` to explicitly queue the installed versions.
 
 ## Local data and logs
 

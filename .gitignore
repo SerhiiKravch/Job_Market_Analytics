@@ -17,6 +17,7 @@ var/
 *.sqlite-*
 *.sqlite3
 *.sqlite3-*
+*.worker.lock
 *.log
 *.log.*
 

@@ -114,9 +114,9 @@ status, content hashes, role family, keyword context, and review status.
 
 SQLite connections enforce foreign keys, use a five-second busy timeout, and
 enable WAL for file databases. The storage transaction boundary serializes
-short-lived sessions within one process. Result immutability, vocabulary
-seeding, evidence-to-source checks before persistence, and active-result
-selection policy belong to later application steps.
+short-lived sessions within one process. The extraction writer validates
+evidence, registers referenced vocabulary entries, and saves completed automatic
+snapshots and active pointers atomically.
 
 ## Message history, checkpoints, and extraction requests
 
@@ -154,8 +154,31 @@ Claiming a request records the attempt before processing begins. Startup
 recovery requeues interrupted claims with their existing attempt count, or
 marks them failed once the limit is reached. Recovery is explicit and must run
 only after the caller has exclusive workspace ownership and no worker can
-still be running. The OS process lock and execution of queued requests are
-later steps.
+still be running. The offline commands acquire a POSIX file lock beside the
+resolved SQLite database before processing or enqueueing new requests.
+
+## Local processing and result selection
+
+The worker releases the claim transaction before parsing. It verifies the pinned
+parser and taxonomy versions and rejects a stale attempt when saving or failing
+a claim. A completed result includes its posting, experience, salary, keywords,
+and review issues in one transaction. Referenced keyword codes are registered
+idempotently; a conflicting stored category is rejected and historical entries
+are retained. Errors store categories rather than raw exception or source text.
+
+A completed result for a superseded revision stays in history without becoming
+active. For the current revision, the highest completed automatic request ID
+wins unless a manual result is selected. Pending and failed requests leave
+the selection intact. A new message revision does not inherit an old selection.
+
+The retry migration adds nullable `extraction_runs.retry_not_before`. A recognized
+SQLite busy or locked error during result persistence can requeue the same
+request with a delay (5 seconds after attempt one, 10 after attempt two by
+default). The default attempt limit is three. Future retries survive a restart
+and do not block other eligible requests. A failure that also prevents recording
+its own status leaves the durable claim for startup recovery. Unavailable
+versions, invalid results, unexpected parser errors, and other storage errors
+do not retry automatically.
 
 ## Deterministic extraction
 

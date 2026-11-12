@@ -174,6 +174,7 @@ class ExtractionRun(Identity, Base):
     review_status: Mapped[str] = mapped_column(server_default="not_required")
     attempt_count: Mapped[int] = mapped_column(server_default=sa.text("0"))
     last_error: Mapped[str | None] = mapped_column(sa.Text)
+    retry_not_before: Mapped[datetime | None] = mapped_column(UtcDateTime)
     created_at: Mapped[datetime] = mapped_column(UtcDateTime)
     started_at: Mapped[datetime | None] = mapped_column(UtcDateTime)
     finished_at: Mapped[datetime | None] = mapped_column(UtcDateTime)
