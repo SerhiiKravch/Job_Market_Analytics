@@ -191,7 +191,7 @@ def test_fresh_upgrade_has_all_tables_and_connection_policy(database):
             )
             assert str(id_column["type"]) == "INTEGER"
         assert first.exec_driver_sql("SELECT version_num FROM alembic_version").scalar_one() == (
-            "0002_extraction_retry"
+            "0003_history_cutoff"
         )
         for connection in (first, second):
             assert connection.exec_driver_sql("PRAGMA foreign_keys").scalar_one() == 1

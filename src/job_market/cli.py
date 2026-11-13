@@ -1,7 +1,10 @@
 """Composition root for explicit operator commands."""
 
 import argparse
+import asyncio
+import json
 import logging
+import signal
 import sys
 from collections.abc import Sequence
 from datetime import UTC, datetime
@@ -10,12 +13,13 @@ from pathlib import Path
 from sqlalchemy.exc import SQLAlchemyError
 
 from job_market import __version__
-from job_market.config import ConfigurationError, load_settings
+from job_market.config import ConfigurationError, Settings, load_settings
 from job_market.domain.validation import INT64_MAX
 from job_market.logging_config import configure_logging
 from job_market.services.processing import installed_versions, process_pending
 from job_market.storage.database import Database
 from job_market.storage.extractions import ExtractionQueue, StaleClaim, UnknownRevision
+from job_market.storage.messages import MessageStore, SourceUnavailable, StaleCheckpoint
 from job_market.storage.migration import MigrationError, upgrade_database
 from job_market.storage.workspace import WorkspaceError, lock_workspace
 
@@ -61,6 +65,11 @@ def build_parser() -> argparse.ArgumentParser:
     commands.add_parser("process-pending", help="process eligible stored requests offline")
     reprocess = commands.add_parser("reprocess", help="queue new requests for stored revisions")
     reprocess.add_argument("revision_ids", metavar="REVISION_ID", type=_revision_id, nargs="+")
+    telegram = commands.add_parser("telegram", help="manage the Telegram user session")
+    telegram_commands = telegram.add_subparsers(dest="telegram_command", required=True)
+    telegram_commands.add_parser("login", help="sign in interactively")
+    telegram_commands.add_parser("sources", help="list accessible broadcast channel dialogs")
+    commands.add_parser("collect", help="collect and process the configured Telegram channel")
     return parser
 
 
@@ -89,6 +98,70 @@ def _run_local_work(args: argparse.Namespace, database_url: str) -> int:
     return int(bool(summary.failed or summary.recovery_failed))
 
 
+async def _telegram_command(args: argparse.Namespace, settings: Settings) -> int:
+    from job_market.ingestion.service import Collector
+    from job_market.ingestion.telegram import hidden_prompt, open_telegram
+
+    credentials = settings.telegram_credentials()
+    if args.command == "telegram":
+        login = args.telegram_command == "login"
+        async with open_telegram(
+            settings.telegram_session_path, credentials, login=login
+        ) as gateway:
+            if login:
+                created = await gateway.login(hidden_prompt)
+                print(
+                    "Telegram login complete."
+                    if created
+                    else "Telegram session is already signed in."
+                )
+            else:
+                await gateway.require_user()
+                for channel in await gateway.sources():
+                    # Explicit operator output, not a log; escape terminal controls.
+                    print(
+                        json.dumps(
+                            {
+                                "chat_id": channel.chat_id,
+                                "title": channel.title,
+                                "username": channel.username,
+                            },
+                            ensure_ascii=True,
+                        )
+                    )
+        return 0
+
+    reference = settings.require_channel()
+    database_url = settings.database_url.get_secret_value()
+    loop = asyncio.get_running_loop()
+    current = asyncio.current_task()
+    with lock_workspace(database_url):
+        loop.add_signal_handler(signal.SIGTERM, current.cancel)
+        try:
+            database = Database(database_url)
+            try:
+                async with open_telegram(settings.telegram_session_path, credentials) as gateway:
+                    await gateway.require_user()
+                    channel = await gateway.resolve(reference)
+                    store = MessageStore(database, installed_versions())
+                    source = store.register_source(
+                        telegram_chat_id=channel.info.chat_id,
+                        name=channel.info.title,
+                        username=channel.info.username,
+                        now=datetime.now(UTC),
+                        backfill_days=settings.backfill_days,
+                    )
+                    logging.getLogger(__name__).info(
+                        "application_started", extra={"source_id": source.id}
+                    )
+                    await Collector(gateway, database, store).run(channel, source, asyncio.Event())
+            finally:
+                database.close()
+        finally:
+            loop.remove_signal_handler(signal.SIGTERM)
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -107,6 +180,16 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 0
         if args.command in {"process-pending", "reprocess"}:
             return _run_local_work(args, settings.database_url.get_secret_value())
+        if args.command in {"telegram", "collect"}:
+            from job_market.ingestion.telegram import TelegramError
+
+            try:
+                return asyncio.run(_telegram_command(args, settings))
+            except (TelegramError, SourceUnavailable, StaleCheckpoint) as exc:
+                print(f"Telegram command failed: {exc}", file=sys.stderr)
+                return 1
+            except asyncio.CancelledError:
+                return 0
         if args.telegram:
             settings.telegram_credentials()
             settings.require_channel()

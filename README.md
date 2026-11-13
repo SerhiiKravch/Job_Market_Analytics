@@ -9,9 +9,9 @@ storage for message revisions, collection checkpoints, and durable extraction
 requests. The deterministic vacancy parser works on original text and captions
 without network access. The [data dictionary](docs/data_dictionary.md) describes
 its output, evidence, taxonomy, and development fixtures. Local processing and
-explicit reprocessing are available for stored revisions. Telegram collection,
-review commands, reports, scheduling, and evaluation are later steps. Accuracy
-is unmeasured.
+explicit reprocessing are available for stored revisions. Telegram collection
+supports one configured broadcast channel. Review commands, reports, scheduling,
+and evaluation are later steps. Accuracy is unmeasured.
 
 ## Installation and checks
 
@@ -52,8 +52,8 @@ uv run --locked python -m job_market config check --telegram
 ```
 
 API ID/hash come from your own Telegram application. Leave phone numbers, login
-codes, and two-step passwords out of `.env`; future interactive login will prompt
-for them. Keep `.env` and session files private.
+codes, and two-step passwords out of `.env`; interactive login prompts for them
+without echoing input. Keep `.env` and session files private.
 
 The default project root is the working directory. `.env`, relative session and
 report paths, and relative SQLite database paths are resolved against that root.
@@ -70,12 +70,12 @@ when runtime files should live elsewhere.
 
 | Setting | Default / meaning |
 |---|---|
-| `TELEGRAM_API_ID` | Optional offline; positive numeric API ID for future Telegram commands |
+| `TELEGRAM_API_ID` | Optional offline; positive numeric API ID for Telegram commands |
 | `TELEGRAM_API_HASH` | Optional offline; 32 hexadecimal characters for Telegram commands |
-| `TELEGRAM_CHANNEL` | Optional offline; already accessible channel reference, resolved during future collection |
+| `TELEGRAM_CHANNEL` | Optional offline; public username or accessible private channel ID |
 | `TELEGRAM_SESSION_PATH` | `./var/telegram.session` |
 | `DATABASE_URL` | `sqlite:///./var/jobs.db` |
-| `BACKFILL_DAYS` | `30`; integer from 1 to 30, for eventual first-import initialization |
+| `BACKFILL_DAYS` | `30`; integer from 1 to 30, applied once for the initial backfill |
 | `REPORT_OUTPUT_DIR` | `./var/reports` |
 | `REPORT_TIMEZONE` | `Europe/Warsaw`; valid IANA timezone, for report calendar boundaries |
 | `LOG_LEVEL` | `INFO`; also DEBUG, WARNING, ERROR, CRITICAL (case insensitive) |
@@ -102,6 +102,34 @@ would disappear when the process exits.
 Close application processes before upgrading an existing database. Make a
 consistent backup using SQLite's backup mechanism; in WAL mode, copying only
 the main `.db` file can omit committed changes. Use the SQLite path for this MVP.
+
+## Telegram collection
+
+The following are live operator commands. Configure your API ID and hash first,
+and run `db upgrade` before collecting:
+
+```sh
+uv run --locked python -m job_market telegram login
+uv run --locked python -m job_market telegram sources
+uv run --locked python -m job_market collect
+```
+
+`telegram login` uses a user account and saves a local session. `telegram sources`
+lists accessible broadcast channel dialogs as JSON on stdout. Use its signed
+`chat_id` for a private channel already accessible to the account, or use
+`@username` for a public broadcast channel. Set `TELEGRAM_CHANNEL` before running
+`collect`. No command joins channels or sends chat messages. An expired or
+missing session requires a separate interactive login. Treat the session file
+and source-list output as private.
+
+Stop the collector with Ctrl+C or SIGTERM. Restart with the same `collect` command:
+it resumes the saved history window and checkpoints, catches up to the channel
+head, and rechecks the latest 100 visible messages for edits. It reconciles about
+once a minute after each completed scan and processes ready extraction work while
+collecting. Deletes and intermediate edits missed while offline are not recovered
+reliably. Storage and session locks prevent concurrent use by these commands.
+The collector was tested with a mocked Telegram client only; live behavior has
+not been smoke-tested.
 
 ## Process stored revisions offline
 

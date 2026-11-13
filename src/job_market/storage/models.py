@@ -68,6 +68,7 @@ class Source(Identity, Base):
     source_type: Mapped[str]
     enabled: Mapped[bool] = mapped_column(_bool("enabled"), server_default=sa.true())
     history_start_at: Mapped[datetime] = mapped_column(UtcDateTime)
+    history_upper_message_id: Mapped[int | None] = mapped_column(sa.BigInteger)
     history_cursor_message_id: Mapped[int | None] = mapped_column(sa.BigInteger)
     history_completed_at: Mapped[datetime | None] = mapped_column(UtcDateTime)
     live_checkpoint_message_id: Mapped[int | None] = mapped_column(sa.BigInteger)

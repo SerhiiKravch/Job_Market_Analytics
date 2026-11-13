@@ -150,6 +150,15 @@ range to reconcile edits. Each batch and checkpoint change commit together.
 The write requires the stored checkpoint to match the caller's starting
 checkpoint. A mismatch rolls back the batch; reread and retry from storage.
 
+The collector registers new-message and edit handlers before sampling the
+channel head. `sources.history_upper_message_id` pins that first head across
+restarts (null before sampling, zero for an empty channel or a legacy backfill
+without a known upper bound). Only completed backfill can establish coverage
+through a pinned positive head. Forward reconciliation then scans to a separate
+sampled head in ascending order; a callback never certifies a covered range.
+An overlapping scan refreshes the latest 100 visible messages within the
+stored window. It does not establish deletion or complete edit history.
+
 Claiming a request records the attempt before processing begins. Startup
 recovery requeues interrupted claims with their existing attempt count, or
 marks them failed once the limit is reached. Recovery is explicit and must run

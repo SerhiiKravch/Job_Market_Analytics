@@ -30,6 +30,7 @@ class SourceState:
     name: str
     username: str | None
     history_start_at: datetime
+    history_upper_message_id: int | None
     history_cursor_message_id: int | None
     history_completed_at: datetime | None
     live_checkpoint_message_id: int | None
@@ -52,6 +53,7 @@ def _source_state(source: Source) -> SourceState:
         name=source.name,
         username=source.username,
         history_start_at=source.history_start_at,
+        history_upper_message_id=source.history_upper_message_id,
         history_cursor_message_id=source.history_cursor_message_id,
         history_completed_at=source.history_completed_at,
         live_checkpoint_message_id=source.live_checkpoint_message_id,
@@ -129,6 +131,21 @@ class MessageStore:
     def get_source(self, source_id: int) -> SourceState:
         with self._database.transaction() as session:
             return _source_state(_require_source(session, source_id))
+
+    def pin_history_head(self, source_id: int, head: int | None) -> SourceState:
+        """Persist the first sampled head; zero is a known empty channel."""
+        _validate_cursor(head)
+        with self._database.transaction() as session:
+            source = _require_source(session, source_id)
+            if source.history_upper_message_id is None:
+                # A completed legacy backfill has no recorded upper boundary.
+                # Do not let a new sample attest to coverage it did not import.
+                legacy = (
+                    source.history_completed_at is not None
+                    or source.history_cursor_message_id is not None
+                )
+                source.history_upper_message_id = 0 if legacy else (head or 0)
+            return _source_state(source)
 
     def store_history_page(
         self,

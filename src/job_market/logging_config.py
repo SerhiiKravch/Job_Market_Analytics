@@ -7,7 +7,16 @@ from datetime import UTC, datetime
 from typing import TextIO
 
 _EVENTS = frozenset(
-    {"application_started", "application_stopped", "configuration_validated", "operation_failed"}
+    {
+        "application_started",
+        "application_stopped",
+        "configuration_validated",
+        "operation_failed",
+        "telegram_flood_wait",
+        "telegram_history_page_saved",
+        "telegram_reconciled",
+        "extractions_processed",
+    }
 )
 _ERROR_CATEGORIES = frozenset({"configuration", "database", "telegram", "parsing", "internal"})
 _NUMERIC_FIELDS = ("source_id", "message_id", "count", "duration_ms")

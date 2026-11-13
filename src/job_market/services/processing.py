@@ -54,6 +54,7 @@ def process_pending(
     clock: Callable[[], datetime] = _now,
     parser=parse_vacancy,
     recover: bool = False,
+    max_requests: int | None = None,
 ) -> ProcessingSummary:
     """Process ready work; caller must hold the workspace lock for recovery."""
     queue = ExtractionQueue(database)
@@ -72,7 +73,12 @@ def process_pending(
     recovery = queue.recover_interrupted(now=clock()) if recover else None
     completed = selected = failed = 0
     reasons: Counter[FailureReason] = Counter()
-    while (claim := queue.claim_next(now=clock())) is not None:
+    handled = 0
+    while max_requests is None or handled < max_requests:
+        claim = queue.claim_next(now=clock())
+        if claim is None:
+            break
+        handled += 1
         if claim.versions != versions:
             reason = FailureReason.VERSION_UNAVAILABLE
         else:
